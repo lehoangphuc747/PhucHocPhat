@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../../layouts/layout.astro";
+import { getCollection, getEntry } from "astro:content";
+
+export async function getStaticPaths() {
+	const posts = await getCollection("library");
+	return posts.map((p) => ({ params: { slug: p.slug }, props: { slug: p.slug } }));
+}
+
+const { slug } = Astro.props;
+const post = await getEntry("library", slug);
+if (!post) {
+	throw new Error(`Post not found: ${slug}`);
+}
+const { Content } = await post.render();
+const { title } = post.data;
+---
+<BaseLayout title={title}>
+	<article class="md-content max-w-5xl mx-auto px-4 py-6 overflow-x-auto">
+		<h1 class="m-0 mb-4 text-2xl text-center">{title}</h1>
+		<Content />
+	</article>
+</BaseLayout>
+
+<style>
+    /* Page-specific helpers can live here if needed; core MD styles moved to global.css */
+</style>

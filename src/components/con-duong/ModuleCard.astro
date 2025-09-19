@@ -1,0 +1,32 @@
+---
+import LessonList from "./LessonList.astro";
+
+interface Lesson { slug: string; title: string; duration?: string; summary?: string }
+const { index, moduleSlug, title, description, lessons } = Astro.props as {
+  index: number;
+  moduleSlug: string;
+  title: string;
+  description?: string;
+  lessons?: Lesson[];
+};
+---
+
+<article class="rounded-lg border border-neutral-200/70 dark:border-neutral-800/70 p-4">
+  <div class="flex items-start gap-3">
+    <div class="h-8 w-8 shrink-0 rounded-full bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center font-medium">
+      {index}
+    </div>
+    <div class="flex-1">
+      <h3 class="font-medium">{title}</h3>
+      {description && <p class="text-sm opacity-80">{description}</p>}
+    </div>
+  </div>
+  {lessons && lessons.length > 0 && (
+    <div class="mt-3">
+      <LessonList moduleSlug={moduleSlug} lessons={lessons} />
+    </div>
+  )}
+</article>
+
+
+

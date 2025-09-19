@@ -1,0 +1,22 @@
+---
+interface Step {
+  label: string;
+  minutes: number;
+}
+
+const { steps, title } = Astro.props as { steps: Step[]; title?: string };
+---
+
+<div class="rounded-xl border border-neutral-200/70 dark:border-neutral-800/70 bg-white/70 dark:bg-neutral-900/40 backdrop-blur p-4">
+  {title && <div class="mb-2 font-medium">{title}</div>}
+  <ol class="space-y-2 list-decimal list-inside">
+    {steps.map((s) => (
+      <li>
+        <span class="font-medium">{s.label}</span>
+        <span class="opacity-70"> — {s.minutes}’</span>
+      </li>
+    ))}
+  </ol>
+</div>
+
+

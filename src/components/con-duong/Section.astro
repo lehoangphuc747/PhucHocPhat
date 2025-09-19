@@ -1,0 +1,18 @@
+---
+const { heading, subheading, id } = Astro.props as {
+  id?: string;
+  heading: string;
+  subheading?: string;
+};
+---
+
+<section id={id} class="mx-auto max-w-3xl px-4 py-6">
+  <h2 class="text-xl font-medium">{heading}</h2>
+  {subheading && (
+    <p class="mt-1 text-sm opacity-80">{subheading}</p>
+  )}
+  <div class="mt-3"></div>
+  <slot />
+</section>
+
+

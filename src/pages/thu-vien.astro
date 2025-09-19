@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../layouts/layout.astro";
+import { getCollection } from "astro:content";
+import SearchTitle from "../components/thu-vien/SearchTitle.astro";
+
+const posts = await getCollection("library");
+const items = posts.map((p) => ({ title: p.data.title, href: `/thu-vien/${p.slug}` }));
+---
+<BaseLayout title="Thư viện">
+	<div class="lib-content" style="max-width: 760px; margin: 0 auto; padding: 24px 194px;">
+		<SearchTitle items={items} />
+	</div>
+</BaseLayout>
+
+<style>
+	.lib-content, .lib-list a {
+		text-align: justify;
+	}
+</style>

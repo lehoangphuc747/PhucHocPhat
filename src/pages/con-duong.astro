@@ -1,0 +1,29 @@
+---
+import BaseLayout from "../layouts/layout.astro";
+import PageHeader from "../components/con-duong/PageHeader.astro";
+import Section from "../components/con-duong/Section.astro";
+import CourseOutline from "../components/con-duong/CourseOutline.astro";
+import Note from "../components/con-duong/Note.astro";
+import { courseModules } from "../content/con-duong";
+---
+
+<BaseLayout title="Con đường">
+	<PageHeader title="Con đường" description="Lộ trình vững – sâu – bền cho người mới bắt đầu.">
+		<Note title="Mục tiêu">
+			<p>10–20 phút/ngày, chất lượng hơn số lượng. Bắt đầu ngay hôm nay.</p>
+		</Note>
+	</PageHeader>
+
+    <div class="mx-auto max-w-3xl px-4 py-6">
+        <Section id="noi-dung" heading="Nội dung hướng dẫn" subheading="Chọn bài bất kỳ để bắt đầu">
+            <Note title="Gợi ý">
+                <p>Bắt đầu từ Module 1 → Lesson 1 để xây nền tảng vững.</p>
+            </Note>
+            <div class="mt-4">
+                <CourseOutline modules={courseModules} />
+            </div>
+        </Section>
+    </div>
+
+    <!-- Sidebar chỉ dùng ở trang chi tiết lesson -->
+</BaseLayout>

@@ -1,0 +1,39 @@
+---
+import Nav from "../components/common/Nav.astro";
+import "../styles/global.css";
+const { title = "Phúc học Phật" } = Astro.props;
+---
+<html lang="vi">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+		<title>{title}</title>
+		<script>
+			(() => {
+				try {
+					const stored = localStorage.getItem('theme');
+					const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+					// Default: light. If user stored preference exists, use it; otherwise, follow system
+					const shouldDark = stored ? stored === 'dark' : prefersDark;
+					document.documentElement.classList.toggle('dark', shouldDark);
+				} catch (_) {}
+			})();
+		</script>
+	</head>
+	<body class="bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100">
+		<Nav />
+		<slot />
+	</body>
+</html>
+
+<style is:global>
+	:root {
+		font-family: "Be Vietnam Pro", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+	}
+	body { margin: 0; }
+</style>

@@ -1,0 +1,189 @@
+@import "tailwindcss";
+
+/* Markdown content styles */
+.md-content { 
+    max-width: 72rem; /* aligns with page wrapper */
+    --md-measure: 65ch;          /* narrower text width to create more side whitespace */
+    --md-table-pad: clamp(0.25rem, 2vw, 2rem); /* tables get responsive side padding */
+}
+
+/* Center and narrow text blocks (not tables) to increase side whitespace */
+.md-content > *:not(table):not(.full-bleed) {
+    max-width: var(--md-measure);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: clamp(1rem, 6vw, 3rem);
+    padding-right: clamp(1rem, 6vw, 3rem);
+}
+.md-content p {
+    text-align: justify;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.9;
+}
+.md-content h1 {
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: clamp(1.875rem, 3vw, 3rem);
+    scroll-margin-top: 5rem;
+}
+.md-content h2 {
+    font-weight: 600;
+    margin-top: 3rem;
+    margin-bottom: 1.25rem;
+    font-size: clamp(1.5rem, 2.2vw, 2rem);
+    scroll-margin-top: 5rem;
+}
+.md-content h3 {
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+    scroll-margin-top: 5rem;
+}
+
+/* Ensure headings get the same side whitespace as text */
+.md-content h1,
+.md-content h2,
+.md-content h3,
+.md-content h4,
+.md-content h5,
+.md-content h6 {
+    max-width: var(--md-measure);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: clamp(1rem, 6vw, 3rem);
+    padding-right: clamp(1rem, 6vw, 3rem);
+    text-align: center;
+}
+.md-content h4, .md-content h5, .md-content h6 {
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Lists */
+.md-content ul, .md-content ol {
+    margin: 0.75rem 0 0.75rem 1.25rem;
+    line-height: 1.9;
+}
+.md-content ul { list-style: disc; }
+.md-content ol { list-style: decimal; }
+.md-content li { margin: 0.25rem 0; }
+
+/* Blockquote */
+.md-content blockquote {
+    margin: 1.25rem 0;
+    padding: 0.75rem 1rem;
+    border-left: 4px solid color-mix(in oklab, currentColor 22%, transparent);
+    background: color-mix(in oklab, currentColor 6%, transparent);
+}
+
+/* Code */
+.md-content :not(pre) > code {
+    background: color-mix(in oklab, currentColor 8%, transparent);
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.25rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.9em;
+}
+.md-content pre {
+    overflow-x: auto;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background: color-mix(in oklab, currentColor 8%, transparent);
+}
+.md-content pre code { font-size: 0.9rem; line-height: 1.8; }
+
+/* Table */
+.md-content { overflow-x: auto; }
+.md-content table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    display: block;            /* allow horizontal scrolling */
+    overflow-x: auto;
+    padding-left: var(--md-table-pad);
+    padding-right: var(--md-table-pad);
+    margin-left: calc(-1 * var(--md-table-pad));
+    margin-right: calc(-1 * var(--md-table-pad));
+}
+.md-content th, .md-content td {
+    padding: 0.5rem;
+    vertical-align: top;
+    border: 1px solid color-mix(in oklab, currentColor 12%, transparent);
+    line-height: 1.95; /* easier chanting */
+    word-break: break-word;
+    hyphens: auto;
+}
+.md-content thead th {
+    font-weight: 600;
+    background: color-mix(in oklab, currentColor 6%, transparent);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+.md-content tbody tr:nth-child(odd) td {
+    background: color-mix(in oklab, currentColor 4%, transparent);
+}
+.md-content tbody tr:hover td {
+    background: color-mix(in oklab, currentColor 8%, transparent);
+}
+
+/* Better nested lists spacing */
+.md-content li > ul,
+.md-content li > ol { margin-top: 0.25rem; margin-bottom: 0.25rem; }
+
+/* Dark mode fine-tuning via prefers-color-scheme as fallback to class */
+@media (prefers-color-scheme: dark) {
+    .md-content blockquote {
+        background: color-mix(in oklab, white 3%, transparent);
+        border-left-color: color-mix(in oklab, white 20%, transparent);
+    }
+    .md-content th, .md-content td {
+        border-color: color-mix(in oklab, white 14%, transparent);
+    }
+    .md-content thead th {
+        background: color-mix(in oklab, white 6%, transparent);
+    }
+}
+
+/* Images */
+.md-content img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    margin: 1rem auto;
+}
+
+/* Horizontal rule */
+.md-content hr {
+    border: 0;
+    border-top: 1px solid color-mix(in oklab, currentColor 16%, transparent);
+    margin: 2rem 0;
+}
+
+/* Links */
+.md-content a {
+    color: color(display-p3 0.13 0.42 0.94 / 0.95);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+.md-content a:hover {
+    text-decoration-thickness: 2px;
+}
+
+/* Misc */
+.md-content kbd {
+    border: 1px solid color-mix(in oklab, currentColor 30%, transparent);
+    padding: 0 0.3rem;
+    border-radius: 0.25rem;
+    box-shadow: inset 0 -1px 0 color-mix(in oklab, currentColor 30%, transparent);
+    font-size: 0.85em;
+}
+.md-content sup, .md-content sub { font-size: 0.75em; }
+.md-content figure { margin: 1.25rem auto; }
+.md-content figcaption { color: color-mix(in oklab, currentColor 50%, transparent); text-align: center; font-size: 0.9em; }

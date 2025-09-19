@@ -1,0 +1,99 @@
+---
+interface Lesson { slug: string; title: string; duration?: string; summary?: string }
+const { moduleSlug, lessons } = Astro.props as { moduleSlug: string; lessons: Lesson[] };
+const wrapId = `lessonlist-${moduleSlug}`;
+const lessonsJSON = JSON.stringify(lessons);
+---
+
+<script>
+  // @ts-nocheck
+  const moduleSlug = "{moduleSlug}";
+  const wrapId = "{wrapId}";
+  const key = `cd-progress:${moduleSlug}`;
+  const stored = typeof window !== 'undefined' ? window.localStorage.getItem(key) : null;
+  /** @type {Record<string, boolean>} */
+  const progress = stored ? JSON.parse(stored) : {};
+  /** @typedef {{ slug: string; title: string; duration?: string; summary?: string }} Lesson */
+  /** @type {Lesson[]} */
+  let lessons = [];
+
+  function save() {
+    try { localStorage.setItem(key, JSON.stringify(progress)); } catch {}
+  }
+
+  function onMount() {
+    const wrap = document.getElementById(wrapId);
+    if (!wrap) return;
+    const data = wrap.getAttribute('data-lessons');
+    lessons = data ? JSON.parse(data) : [];
+
+    // lắng nghe đồng bộ từ trang chi tiết (storage event)
+    window.addEventListener('storage', (e) => {
+      if (e.key === key) {
+        try {
+          const latest = JSON.parse(e.newValue || '{}');
+          Object.assign(progress, latest);
+          updateProgressBar();
+        } catch {}
+      }
+    });
+
+    // highlight last viewed
+    try {
+      const last = JSON.parse(localStorage.getItem('cd:last') || 'null');
+      if (last && last.module === moduleSlug && last.lesson) {
+        const active = wrap.querySelector(`[data-lesson-row="${moduleSlug}"][data-slug="${last.lesson}"]`);
+        if (active) active.setAttribute('data-active', '1');
+      }
+    } catch {}
+
+    updateProgressBar();
+  }
+
+  function updateProgressBar() {
+    const total = lessons.length;
+    const done = lessons.filter((l) => !!progress[l.slug]).length;
+    const pct = Math.max(0, Math.min(100, Math.round((done / Math.max(1, total)) * 100)));
+    const bar = document.getElementById(`progress-bar-${moduleSlug}`);
+    const label = document.getElementById(`progress-label-${moduleSlug}`);
+    if (bar) (bar as HTMLElement).style.width = pct + '%';
+    if (label) label.textContent = pct + '%';
+  }
+
+  // modal đã tắt: không còn open/close
+
+  if (typeof window !== 'undefined') {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', onMount, { once: true });
+    } else {
+      onMount();
+    }
+  }
+</script>
+
+<div id={wrapId} data-lessons={lessonsJSON}>
+<div class="mb-2">
+  <div class="flex items-center justify-between text-xs mb-1">
+    <span>Tiến độ</span>
+    <span id={`progress-label-${moduleSlug}`}>0%</span>
+  </div>
+  <div class="h-2 rounded bg-neutral-200/70 dark:bg-neutral-800/70 overflow-hidden">
+    <div id={`progress-bar-${moduleSlug}`} class="h-full bg-neutral-800 dark:bg-neutral-100" style="width:0%"></div>
+  </div>
+</div>
+
+<ul class="space-y-1">
+  {lessons.map((l) => (
+    <li class="rounded px-2 py-1 hover:bg-neutral-50 dark:hover:bg-neutral-900/30" data-lesson-row={moduleSlug} data-slug={l.slug} style="cursor:pointer">
+      <a href={`/con-duong/${moduleSlug}/${l.slug}`} class="break-words" data-lesson-link title={l.title} onclick="try{localStorage.setItem('cd:last', JSON.stringify({module:'${moduleSlug}', lesson:'${l.slug}'})); window.scrollTo({top:0,behavior:'smooth'})}catch{}">{l.title}</a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  li[data-active="1"] { background: rgba(0,0,0,0.04); border-radius: 6px; }
+</style>
+
+</div>
+
+

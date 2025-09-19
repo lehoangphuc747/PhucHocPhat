@@ -1,0 +1,143 @@
+---
+import BaseLayout from "../../../layouts/layout.astro";
+import { courseModules } from "../../../content/con-duong";
+import CourseOutline from "../../../components/con-duong/CourseOutline.astro";
+
+export async function getStaticPaths() {
+  const paths = courseModules.flatMap((m: any) =>
+    (m.lessons || []).map((l: any) => ({ params: { module: m.slug, lesson: l.slug } }))
+  );
+  return paths;
+}
+
+const { module, lesson } = Astro.params as { module: string; lesson: string };
+const mod = courseModules.find((m) => (m as any).slug === module);
+const lessons = (mod?.lessons as any[]) || [];
+const currentIndex = lessons.findIndex((l) => l.slug === lesson);
+const les = currentIndex >= 0 ? lessons[currentIndex] : undefined;
+
+const prev = currentIndex > 0 ? lessons[currentIndex - 1] : null;
+const next = currentIndex >= 0 && currentIndex < lessons.length - 1 ? lessons[currentIndex + 1] : null;
+
+if (!mod || !les) {
+  throw new Error("Bài học không tồn tại");
+}
+---
+
+<BaseLayout title={`${les.title} — ${mod.title}`}>
+  <div class="mx-auto max-w-6xl px-4 py-8">
+    <div class="flex justify-end mb-3">
+      <button id="cd-sidebar-toggle" class="rounded border border-neutral-300 dark:border-neutral-700 px-2 py-1 text-xs">Ẩn sidebar</button>
+    </div>
+    <div id="cd-lesson-layout" class="grid gap-6 md:grid-cols-[280px_1fr]">
+      <aside id="cd-lesson-aside" class="md:sticky md:top-20 h-fit">
+        <h2 class="text-sm font-medium opacity-70 mb-2">Khóa học</h2>
+        <CourseOutline modules={courseModules} />
+      </aside>
+      <main>
+      <a href={`/con-duong#${module}`} class="text-sm underline opacity-80">← Quay lại module</a>
+      <h1 class="text-2xl font-semibold mt-2">{les.title}</h1>
+      {les.summary && <p class="mt-2 opacity-80">{les.summary}</p>}
+
+      <div class="mt-4">
+        <button id="cd-toggle-done" class="rounded border border-neutral-300 dark:border-neutral-700 px-3 py-1 text-sm">
+          Đánh dấu hoàn thành
+        </button>
+      </div>
+
+      <div class="mt-6 prose dark:prose-invert max-w-none">
+        <p>Nội dung chi tiết sẽ được bổ sung.</p>
+      </div>
+
+      <div class="mt-8 flex items-center justify-between">
+        {prev ? (
+          <a class="underline" href={`/con-duong/${module}/${prev.slug}`} id="cd-prev">← {prev.title}</a>
+        ) : <span></span>}
+        {next ? (
+          <a class="underline" href={`/con-duong/${module}/${next.slug}`} id="cd-next">{next.title} →</a>
+        ) : <span></span>}
+      </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    // @ts-nocheck
+    try { localStorage.setItem('cd:last', JSON.stringify({ module: "{module}", lesson: "{lesson}" })); } catch {}
+    // Sidebar toggle (ẩn/hiện) để tập trung đọc
+    (function(){
+      const key = 'cd:lesson:sidebar-hidden';
+      const layout = document.getElementById('cd-lesson-layout');
+      const aside = document.getElementById('cd-lesson-aside');
+      const btn = document.getElementById('cd-sidebar-toggle');
+      function apply(hidden){
+        if (!layout || !aside || !btn) return;
+        if (hidden){
+          aside.classList.add('hidden');
+          layout.classList.remove('md:grid-cols-[280px_1fr]');
+          btn.textContent = 'Hiện sidebar';
+        } else {
+          aside.classList.remove('hidden');
+          layout.classList.add('md:grid-cols-[280px_1fr]');
+          btn.textContent = 'Ẩn sidebar';
+        }
+      }
+      try {
+        const stored = localStorage.getItem(key);
+        const initialHidden = stored === '1';
+        apply(initialHidden);
+      } catch { apply(false); }
+      if (btn){
+        btn.addEventListener('click', () => {
+          const currentlyHidden = aside && aside.classList.contains('hidden');
+          const nextHidden = !currentlyHidden;
+          apply(nextHidden);
+          try { localStorage.setItem(key, nextHidden ? '1' : '0'); } catch {}
+        });
+      }
+    })();
+    // toggle hoàn thành cho bài học hiện tại
+    (function(){
+      const key = `cd-progress:${"{module}"}`;
+      const stored = typeof localStorage !== 'undefined' ? localStorage.getItem(key) : null;
+      const progress = stored ? JSON.parse(stored) : {};
+      const btn = document.getElementById('cd-toggle-done');
+      const cb = document.querySelector(`input[data-lesson-checkbox="{module}"][data-slug="{lesson}"]`);
+      function render(){
+        if (!btn) return;
+        const done = !!progress["{lesson}"];
+        btn.textContent = done ? 'Đã hoàn thành' : 'Đánh dấu hoàn thành';
+        btn.setAttribute('aria-pressed', done ? 'true' : 'false');
+        btn.classList.toggle('bg-green-100', done);
+        btn.classList.toggle('border-green-400', done);
+        btn.classList.toggle('text-green-700', done);
+        if (cb) { cb.checked = done; }
+      }
+      if (btn){
+        btn.addEventListener('click', () => {
+          progress["{lesson}"] = !progress["{lesson}"];
+          try { localStorage.setItem(key, JSON.stringify(progress)); } catch {}
+          render();
+        });
+        render();
+      }
+      if (cb){
+        cb.addEventListener('change', () => {
+          progress["{lesson}"] = cb.checked;
+          try { localStorage.setItem(key, JSON.stringify(progress)); } catch {}
+          render();
+        });
+      }
+    })();
+    document.addEventListener('keydown', (e) => {
+      if (['INPUT','TEXTAREA'].includes(e.target.tagName)) return;
+      if (e.key === 'ArrowLeft') {
+        const a = document.getElementById('cd-prev'); if (a) a.click();
+      } else if (e.key === 'ArrowRight') {
+        const a = document.getElementById('cd-next'); if (a) a.click();
+      }
+    });
+  </script>
+</BaseLayout>
+
+

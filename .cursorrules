@@ -1,0 +1,27 @@
+# Cursor Rules
+
+## Cấu trúc component theo trang
+- Mỗi trang có một folder component riêng để chứa component chỉ dùng cho trang đó.
+  - Vị trí: `src/components/<ten-trang>/...`
+  - Ví dụ: trang home → `src/components/home/`, trang about → `src/components/about/`
+- Các component dùng chung toàn site đặt tại: `src/components/common/`
+
+## Quy ước đặt tên
+- Tên component dùng PascalCase: `MyButton.astro`, `HeroSection.astro`
+- Component dành riêng cho trang nằm trong folder trang tương ứng: `src/components/home/HeroSection.astro`
+- Component dùng chung: `src/components/common/Button.astro`
+
+## Import component
+- Nếu chưa cấu hình alias, import tương đối từ `src/components`.
+  - Dùng chung: `import Button from "../../components/common/Button.astro"`
+  - Theo trang: `import HeroSection from "../../components/home/HeroSection.astro"`
+- Có thể bổ sung alias sau trong `tsconfig.json` và `astro.config.mjs` để import ngắn gọn.
+
+## Khi thêm trang mới
+- Tạo folder component cho trang trong `src/components/<ten-trang>/`
+- Đặt tất cả component chỉ dùng cho trang đó vào folder vừa tạo
+- Nếu thấy component có thể tái sử dụng, di chuyển sang `src/components/common/`
+
+## Ghi chú
+- Dự án dùng Astro, tuân thủ conventions của Astro về component `.astro`
+- Phong cách UI tối giản; font hỗ trợ tiếng Việt toàn site

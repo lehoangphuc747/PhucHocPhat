@@ -1,0 +1,18 @@
+---
+const { open, title } = Astro.props as {
+  open: boolean;
+  title?: string;
+};
+---
+
+{open && (
+  <div class="fixed inset-0 z-50 flex items-center justify-center">
+    <div class="absolute inset-0 bg-black/40"></div>
+    <div class="relative z-10 w-[min(680px,92vw)] rounded-lg bg-white dark:bg-neutral-900 border border-neutral-200/70 dark:border-neutral-800/70 p-4">
+      {title && <div class="font-medium mb-2">{title}</div>}
+      <slot />
+    </div>
+  </div>
+)}
+
+

@@ -1,0 +1,21 @@
+---
+interface Week {
+  title: string;
+  goals: string[];
+}
+
+const { weeks } = Astro.props as { weeks: Week[] };
+---
+
+<div class="grid gap-3 md:grid-cols-2">
+  {weeks.map((w) => (
+    <div class="rounded-lg border border-neutral-200/70 dark:border-neutral-800/70 p-3">
+      <div class="font-medium mb-1">{w.title}</div>
+      <ul class="list-disc list-inside space-y-1">
+        {w.goals.map((g) => <li>{g}</li>)}
+      </ul>
+    </div>
+  ))}
+</div>
+
+

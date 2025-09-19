@@ -1,0 +1,29 @@
+---
+const { items = [] } = Astro.props as { items: { title: string; href: string }[] };
+---
+<div class="max-w-[760px] mx-auto px-4 pt-4 pb-4">
+	<input id="search-input" type="text" placeholder="Tìm theo tiêu đề..." class="w-full rounded border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-3 py-2 text-sm outline-none" />
+</div>
+<ul id="search-list" class="max-w-[760px] mx-auto px-4 m-0 p-0 list-none grid gap-2 mt-2">
+	{items.map((it) => (
+		<li data-title={it.title.toLowerCase()}>
+			<a href={it.href} class="no-underline text-neutral-900 dark:text-neutral-100 hover:opacity-80">
+				<strong>{it.title}</strong>
+			</a>
+		</li>
+	))}
+</ul>
+
+<script>
+	const input = document.getElementById('search-input');
+	const list = document.getElementById('search-list');
+	if (input && list) {
+		input.addEventListener('input', () => {
+			const q = input.value.trim().toLowerCase();
+			for (const li of list.querySelectorAll('li')) {
+				const t = li.getAttribute('data-title') || '';
+				(li as HTMLElement).style.display = t.includes(q) ? '' : 'none';
+			}
+		});
+	}
+</script>

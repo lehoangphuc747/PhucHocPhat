@@ -1,0 +1,59 @@
+---
+interface Module {
+  slug: string;
+  title: string;
+  description?: string;
+  lessons?: { slug: string; title: string; duration?: string; summary?: string }[];
+}
+
+const { modules } = Astro.props as { modules: Module[] };
+import ModuleCard from "./ModuleCard.astro";
+import LessonList from "./LessonList.astro";
+---
+
+<div class="space-y-3">
+  {modules.map((m, i) => (
+    <details data-module-item={m.slug} open class="rounded-md border border-neutral-200/70 dark:border-neutral-800/70">
+      <summary class="cursor-pointer select-none flex items-center gap-2 px-3 py-2">
+        <span class="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-neutral-100 dark:bg-neutral-800 text-xs font-medium">{i + 1}</span>
+        <span class="font-medium">{m.title}</span>
+        <span class="ml-auto text-xs opacity-70">{(m.lessons?.length) ?? 0} bài</span>
+      </summary>
+      {m.lessons && (
+        <div class="px-3 pb-3">
+          <LessonList moduleSlug={m.slug} lessons={m.lessons} />
+        </div>
+      )}
+    </details>
+  ))}
+  
+</div>
+
+<script>
+  // @ts-nocheck
+  const key = 'cd-modules:collapsed';
+  const stored = typeof window !== 'undefined' ? localStorage.getItem(key) : null;
+  const state = stored ? JSON.parse(stored) : {};
+
+  function onMount() {
+    document.querySelectorAll('[data-module-item]').forEach((el) => {
+      const details = /** @type {HTMLDetailsElement} */ (el);
+      const slug = details.getAttribute('data-module-item');
+      if (slug && typeof state[slug] === 'boolean') details.open = !state[slug];
+      details.addEventListener('toggle', () => {
+        if (!slug) return;
+        state[slug] = !details.open; // lưu collapsed
+        try { localStorage.setItem(key, JSON.stringify(state)); } catch {}
+      });
+    });
+  }
+
+  if (typeof window !== 'undefined') {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', onMount, { once: true });
+    } else {
+      onMount();
+    }
+  }
+</script>
+
