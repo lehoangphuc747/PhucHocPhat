@@ -1,5 +1,5 @@
 import { Outlet, Link } from "react-router-dom";
-import { MadeWithDyad } from "./made-with-dyad";
+// import { MadeWithDyad } from "./made-with-dyad"; // Đã loại bỏ import
 
 const Layout = () => {
   return (
@@ -22,7 +22,7 @@ const Layout = () => {
       </main>
       
       <footer className="w-full">
-        <MadeWithDyad />
+        {/* <MadeWithDyad /> */} {/* Đã loại bỏ việc sử dụng component */}
       </footer>
     </div>
   );

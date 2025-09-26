@@ -1,6 +1,6 @@
 import { Toaster } from "@/components/ui/toaster";
 import { SonnerToaster } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
+// import { TooltipProvider } from "@/components/ui/tooltip"; // Tạm thời loại bỏ
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
@@ -13,11 +13,11 @@ import React from "react";
 const queryClient = new QueryClient();
 
 const App = () => (
-  <React.Fragment> {/* Fragment cấp cao nhất cho component App */}
-    <Toaster /> {/* Toaster và SonnerToaster được đặt ở đây */}
+  <React.Fragment>
+    <Toaster />
     <SonnerToaster />
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
+      {/* <TooltipProvider> */} {/* Tạm thời loại bỏ */}
         <BrowserRouter>
           <Routes>
             <Route element={<Layout />}>
@@ -29,7 +29,7 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
-      </TooltipProvider>
+      {/* </TooltipProvider> */} {/* Tạm thời loại bỏ */}
     </QueryClientProvider>
   </React.Fragment>
 );
