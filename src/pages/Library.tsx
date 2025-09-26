@@ -13,7 +13,10 @@ const Library = () => {
           <Link
             to={`/library/${article.id}`}
             key={article.id}
-            className="block text-center p-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 border rounded-md border-gray-200 dark:border-gray-700"
+            className="block text-center p-2 border rounded-md border-gray-200 dark:border-gray-700
+                       hover:text-blue-600 dark:hover:text-blue-400 
+                       hover:bg-gray-100 dark:hover:bg-gray-800 
+                       hover:scale-[1.02] transition-all duration-200 ease-in-out"
           >
             <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
               {article.title}
