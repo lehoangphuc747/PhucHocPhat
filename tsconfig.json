@@ -5,14 +5,17 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
+    "esModuleInterop": true, // Đã thêm để cải thiện khả năng tương thích module
+    "allowSyntheticDefaultImports": true, // Đã thêm
+    "forceConsistentCasingInFileNames": true,
 
     /* Bundler mode */
-    "moduleResolution": "bundler",
+    "moduleResolution": "bundler", // Đã thay đổi từ "nodenext" sang "bundler"
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
+    "jsx": "react-jsx", // Đảm bảo JSX được xử lý đúng cách
 
     /* Linting */
     "strict": true,
@@ -24,7 +27,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "types": ["react", "react-dom"] // Đã thêm để đảm bảo các kiểu React được tải
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

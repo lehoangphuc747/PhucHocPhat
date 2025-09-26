@@ -2,14 +2,19 @@
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    "jsx": "react-jsx",
+    "jsx": "react-jsx", // Đảm bảo JSX được xử lý đúng cách
     "lib": ["DOM", "DOM.Iterable", "ES2020"],
     "module": "ESNext",
     "target": "ES2020",
-    "baseUrl": ".", // Đảm bảo baseUrl được đặt
-    "paths": { // Đảm bảo paths được đặt
+    "baseUrl": ".",
+    "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "moduleResolution": "bundler", // Đã thay đổi từ "nodenext" sang "bundler"
+    "allowSyntheticDefaultImports": true, // Đã thêm
+    "allowImportingTsExtensions": true,
+    "esModuleInterop": true, // Đã thêm để cải thiện khả năng tương thích module
+    "types": ["react", "react-dom"] // Đã thêm để đảm bảo các kiểu React được tải
   },
   "include": ["src"],
   "references": [

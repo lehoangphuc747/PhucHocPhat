@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 
@@ -7,7 +9,7 @@ import { ButtonProps, buttonVariants } from "@/components/ui/button";
 const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
   <nav
     role="navigation"
-    aria-label="pagination"
+    aria-label="Pagination"
     className={cn("mx-auto flex w-full justify-center", className)}
     {...props}
   />
@@ -39,24 +41,26 @@ type PaginationLinkProps = {
 } & Pick<ButtonProps, "size"> &
   React.ComponentProps<"a">;
 
-const PaginationLink = ({
+function PaginationLink({
   className,
   isActive,
   size = "icon",
   ...props
-}: PaginationLinkProps) => (
-  <a
-    aria-current={isActive ? "page" : undefined}
-    className={cn(
-      buttonVariants({
-        variant: isActive ? "outline" : "ghost",
-        size,
-      }),
-      className,
-    )}
-    {...props}
-  />
-);
+}: PaginationLinkProps) {
+  return (
+    <a
+      aria-current={isActive ? "page" : undefined}
+      className={cn(
+        buttonVariants({
+          variant: isActive ? "outline" : "ghost",
+          size,
+        }),
+        className,
+      )}
+      {...props}
+    />
+  );
+}
 PaginationLink.displayName = "PaginationLink";
 
 const PaginationPrevious = ({

@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
@@ -7,26 +9,14 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
-type CarouselApi = UseEmblaCarouselType[1];
-type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
-type CarouselOptions = UseCarouselParameters[0];
-type CarouselPlugin = UseCarouselParameters[1];
-
-type CarouselProps = {
-  opts?: CarouselOptions;
-  plugins?: CarouselPlugin;
-  orientation?: "horizontal" | "vertical";
-  setApi?: (api: CarouselApi) => void;
-};
-
 type CarouselContextProps = {
-  carouselRef: ReturnType<typeof useEmblaCarousel>[0];
-  api: ReturnType<typeof useEmblaCarousel>[1];
-  scrollPrev: () => void;
+  carouselRef: UseEmblaCarouselType[0];
+  api: UseEmblaCarouselType[1];
   scrollNext: () => void;
-  canScrollPrev: boolean;
+  scrollPrev: () => void;
   canScrollNext: boolean;
-} & CarouselProps;
+  canScrollPrev: boolean;
+} & React.ComponentPropsWithoutRef<"div">;
 
 const CarouselContext = React.createContext<CarouselContextProps | null>(null);
 
@@ -34,15 +24,22 @@ function useCarousel() {
   const context = React.useContext(CarouselContext);
 
   if (!context) {
-    throw new Error("useCarousel must be used within a <Carousel />");
+    throw new Error("useCarousel must be used within a <Carousel>");
   }
 
   return context;
 }
 
+type CarouselProps = {
+  opts?: Parameters<typeof useEmblaCarousel>[0];
+  plugins?: Parameters<typeof useEmblaCarousel>[1];
+  orientation?: "horizontal" | "vertical";
+  setApi?: (api: UseEmblaCarouselType[1]) => void;
+} & React.ComponentPropsWithoutRef<"div">;
+
 const Carousel = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & CarouselProps
+  CarouselProps
 >(
   (
     {
@@ -66,7 +63,7 @@ const Carousel = React.forwardRef<
     const [canScrollPrev, setCanScrollPrev] = React.useState(false);
     const [canScrollNext, setCanScrollNext] = React.useState(false);
 
-    const onSelect = React.useCallback((api: CarouselApi) => {
+    const onSelect = React.useCallback((api: UseEmblaCarouselType[1]) => {
       if (!api) {
         return;
       }
@@ -84,7 +81,7 @@ const Carousel = React.forwardRef<
     }, [api]);
 
     const handleKeyDown = React.useCallback(
-      (event: React.KeyboardEvent<HTMLDivElement>) => {
+      (event: React.KeyboardEvent) => {
         if (event.key === "ArrowLeft") {
           event.preventDefault();
           scrollPrev();
@@ -97,14 +94,6 @@ const Carousel = React.forwardRef<
     );
 
     React.useEffect(() => {
-      if (!api || !setApi) {
-        return;
-      }
-
-      setApi(api);
-    }, [api, setApi]);
-
-    React.useEffect(() => {
       if (!api) {
         return;
       }
@@ -114,9 +103,13 @@ const Carousel = React.forwardRef<
       api.on("select", onSelect);
 
       return () => {
-        api?.off("select", onSelect);
+        api.off("select", onSelect);
       };
     }, [api, onSelect]);
+
+    React.useEffect(() => {
+      setApi?.(api);
+    }, [api, setApi]);
 
     return (
       <CarouselContext.Provider
@@ -124,12 +117,11 @@ const Carousel = React.forwardRef<
           carouselRef,
           api: api,
           opts,
-          orientation:
-            orientation || (opts?.axis === "y" ? "vertical" : "horizontal"),
-          scrollPrev,
+          orientation,
           scrollNext,
-          canScrollPrev,
+          scrollPrev,
           canScrollNext,
+          canScrollPrev,
         }}
       >
         <div
@@ -204,7 +196,7 @@ const CarouselPrevious = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        "absolute  h-8 w-8 rounded-full",
+        "absolute h-8 w-8 rounded-full",
         orientation === "horizontal"
           ? "-left-12 top-1/2 -translate-y-1/2"
           : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
@@ -251,7 +243,6 @@ const CarouselNext = React.forwardRef<
 CarouselNext.displayName = "CarouselNext";
 
 export {
-  type CarouselApi,
   Carousel,
   CarouselContent,
   CarouselItem,

@@ -1,8 +1,3 @@
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { articles } from "@/data/articles";
 
@@ -14,12 +9,10 @@ const Library = () => {
       </h1>
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {articles.map((article) => (
-          <Link to={`/library/${article.id}`} key={article.id}>
-            <Card className="hover:shadow-lg transition-shadow duration-200 cursor-pointer">
-              <CardHeader>
-                <CardTitle>{article.title}</CardTitle>
-              </CardHeader>
-            </Card>
+          <Link to={`/library/${article.id}`} key={article.id} className="block text-center p-4 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">
+            <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
+              {article.title}
+            </h2>
           </Link>
         ))}
       </div>
