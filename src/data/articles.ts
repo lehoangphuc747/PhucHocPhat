@@ -1,8 +1,9 @@
 export interface Article {
   id: string;
   title: string;
-  videoUrl?: string; // Đã thay đổi thành optional
-  content?: string; // Thêm trường content
+  videoUrl?: string;
+  content?: string;
+  chantLines?: string[]; // Thêm trường mới để lưu các dòng chú
 }
 
 export const articles: Article[] = [
@@ -24,7 +25,6 @@ export const articles: Article[] = [
   {
     id: "nghi-thuc-tri-tung-chu-dai-bi-tai-gia",
     title: "NGHI THỨC TRÌ TỤNG CHÚ ĐẠI BI TẠI GIA",
-    // videoUrl: "https://www.youtube.com/embed/zNYT7HBneHY", // Đã xóa trường videoUrl
     content: `
       <p class="italic text-gray-700 dark:text-gray-300 mb-6">(Trước khi bắt đầu, hãy giữ thân tâm thanh tịnh, trang phục trang nghiêm, ngồi thẳng lưng và hai tay chắp trước ngực.)</p>
 
@@ -78,57 +78,6 @@ export const articles: Article[] = [
       <p class="mb-2">Cho tất cả đều được tiêu trừ nghiệp chướng,</p>
       <p class="mb-2">Tăng trưởng phước lành, kết duyên Phật pháp.</p>
 
-      <h2 class="text-2xl font-bold mt-8 mb-4 text-gray-800 dark:text-gray-200">PHẦN 2: CHÁNH KINH (TRÌ TỤNG CHÚ ĐẠI BI)</h2>
-      <p class="italic text-gray-600 dark:text-gray-400 mb-4">(Đọc 1, 3, 5 biến hoặc nhiều hơn tùy theo thời gian và tâm nguyện)</p>
-      <p class="font-semibold mt-2">Nam mô Đại Bi Hội Thượng Phật Bồ Tát (3 lần)</p>
-      <p class="mt-4 mb-2">Thiên thủ thiên nhãn vô ngại Đại bi tâm đà la ni.</p>
-      <p class="mb-2">Nam mô hắc ra đát na, đa ra dạ da.</p>
-      <p class="mb-2">Nam mô a rị da, bà lô yết đế, thước bát ra da.</p>
-      <p class="mb-2">Bồ Đề tát đỏa bà da. Ma ha tát đỏa bà da.</p>
-      <p class="mb-2">Ma ha ca lô ni ca da.</p>
-      <p class="mb-2">Án, tát bàn ra phạt duệ, số đát na đát tỏa.</p>
-      <p class="mb-2">Nam mô tất kiết lật đỏa, y mông a rị da,</p>
-      <p class="mb-2">bà lô yết đế, thất Phật ra lăng đà bà.</p>
-      <p class="mb-2">Nam mô na ra cẩn trì. Hê rị, ma ha bàn đa sa mế.</p>
-      <p class="mb-2">Tát bà a tha đậu du bằng, a thệ dựng.</p>
-      <p class="mb-2">Tát bà tát đa, na ma bà già.</p>
-      <p class="mb-2">Ma phạt đạt đậu, đát điệt tha.</p>
-      <p class="mb-2">Án, a bà lô hê, lô ca đế, ca ra đế, di hê rị.</p>
-      <p class="mb-2">Ma ha bồ đề tát đỏa.</p>
-      <p class="mb-2">Tát bà tát bà. Ma ra ma ra.</p>
-      <p class="mb-2">Ma hê ma hê, rị đà dựng.Câu lô câu lô, yết mông.</p>
-      <p class="mb-2">Độ lô độ lô, phạt xà da đế.</p>
-      <p class="mb-2">Ma ha phạt xà da đế.</p>
-      <p class="mb-2">Đà ra đà ra. Địa rị ni.</p>
-      <p class="mb-2">Thất Phật ra da. Giá ra giá ra.</p>
-      <p class="mb-2">Mạ mạ phạt ma ra, mục đế lệ.</p>
-      <p class="mb-2">Y hê y hê, thất na thất na.</p>
-      <p class="mb-2">A ra sâm Phật ra xá lợi.</p>
-      <p class="mb-2">Phạt sa phạt sâm. Phật ra xá da.</p>
-      <p class="mb-2">Hô lô hô lô, ma ra.</p>
-      <p class="mb-2">Hô lô hô lô, hê rị.</p>
-      <p class="mb-2">Ta ra ta ra, tất rị tất rị, tô rô tô rô.</p>
-      <p class="mb-2">Bồ Đề dạ, Bồ Đề dạ.</p>
-      <p class="mb-2">Bồ đà dạ, bồ đà dạ.</p>
-      <p class="mb-2">Di đế rị dạ. Na ra cẩn trì.Địa rị sắc ni na. Ba dạ ma na.</p>
-      <p class="mb-2">Ta bà ha. Tất đà dạ.</p>
-      <p class="mb-2">Ta bà ha. Ma ha tất đà dạ.</p>
-      <p class="mb-2">Ta bà ha. Tất đà du nghệ.</p>
-      <p class="mb-2">Thất bàn ra dạ. Ta bà ha.</p>
-      <p class="mb-2">Na ra cẩn trì. Ta bà ha.</p>
-      <p class="mb-2">Ma ra na ra. Ta bà ha.</p>
-      <p class="mb-2">Tất ra tăng a mục khê da.</p>
-      <p class="mb-2">Ta bà ha. Ta bà ma ha, a tất đà dạ.</p>
-      <p class="mb-2">Ta bà ha. Giả kiết ra a tất đà dạ.</p>
-      <p class="mb-2">Ta bà ha. Ba đà ma yết tất đà dạ.</p>
-      <p class="mb-2">Ta bà ha. Na ra cẩn trì bàn đà ra dạ.</p>
-      <p class="mb-2">Ta bà ha. Ma bà lị thắng yết ra dạ.</p>
-      <p class="mb-2">Ta bà ha.</p>
-      <p class="mb-2">Nam mô hắc ra đát na, đa ra dạ da.</p>
-      <p class="mb-2">Nam mô a rị da, bà lô yết đế,</p>
-      <p class="mb-2">thước bàn ra dạ. Ta bà ha.</p>
-      <p class="mb-2">Án, tất điện đô, mạn đa ra, bạt đà dạ. Ta bà ha.</p>
-
       <h2 class="text-2xl font-bold mt-8 mb-4 text-gray-800 dark:text-gray-200">PHẦN 3: HỒI HƯỚNG (SAU KHI TỤNG)</h2>
 
       <h4 class="text-xl font-semibold mt-6 mb-2 text-gray-700 dark:text-gray-300">(1) Niệm Phật và Bồ Tát</h4>
@@ -170,5 +119,55 @@ export const articles: Article[] = [
       <p class="mb-2">Tự quy y Tăng, xin nguyện chúng sinh, thống lý đại chúng, hết thảy không ngại. (1 lạy)</p>
       <p class="italic text-gray-600 dark:text-gray-400 mt-4">(Xá 3 xá và kết thúc buổi lễ.)</p>
     `,
+    chantLines: [
+      "Nam mô Đại Bi Hội Thượng Phật Bồ Tát (3 lần)",
+      "Thiên thủ thiên nhãn vô ngại Đại bi tâm đà la ni.",
+      "Nam mô hắc ra đát na, đa ra dạ da.",
+      "Nam mô a rị da, bà lô yết đế, thước bát ra da.",
+      "Bồ Đề tát đỏa bà da. Ma ha tát đỏa bà da.",
+      "Ma ha ca lô ni ca da.",
+      "Án, tát bàn ra phạt duệ, số đát na đát tỏa.",
+      "Nam mô tất kiết lật đỏa, y mông a rị da,",
+      "bà lô yết đế, thất Phật ra lăng đà bà.",
+      "Nam mô na ra cẩn trì. Hê rị, ma ha bàn đa sa mế.",
+      "Tát bà a tha đậu du bằng, a thệ dựng.",
+      "Tát bà tát đa, na ma bà già.",
+      "Ma phạt đạt đậu, đát điệt tha.",
+      "Án, a bà lô hê, lô ca đế, ca ra đế, di hê rị.",
+      "Ma ha bồ đề tát đỏa.",
+      "Tát bà tát bà. Ma ra ma ra.",
+      "Ma hê ma hê, rị đà dựng.Câu lô câu lô, yết mông.",
+      "Độ lô độ lô, phạt xà da đế.",
+      "Ma ha phạt xà da đế.",
+      "Đà ra đà ra. Địa rị ni.",
+      "Thất Phật ra da. Giá ra giá ra.",
+      "Mạ mạ phạt ma ra, mục đế lệ.",
+      "Y hê y hê, thất na thất na.",
+      "A ra sâm Phật ra xá lợi.",
+      "Phạt sa phạt sâm. Phật ra xá da.",
+      "Hô lô hô lô, ma ra.",
+      "Hô lô hô lô, hê rị.",
+      "Ta ra ta ra, tất rị tất rị, tô rô tô rô.",
+      "Bồ Đề dạ, Bồ Đề dạ.",
+      "Bồ đà dạ, bồ đà dạ.",
+      "Di đế rị dạ. Na ra cẩn trì.Địa rị sắc ni na. Ba dạ ma na.",
+      "Ta bà ha. Tất đà dạ.",
+      "Ta bà ha. Ma ha tất đà dạ.",
+      "Ta bà ha. Tất đà du nghệ.",
+      "Thất bàn ra dạ. Ta bà ha.",
+      "Na ra cẩn trì. Ta bà ha.",
+      "Ma ra na ra. Ta bà ha.",
+      "Tất ra tăng a mục khê da.",
+      "Ta bà ha. Ta bà ma ha, a tất đà dạ.",
+      "Ta bà ha. Giả kiết ra a tất đà dạ.",
+      "Ta bà ha. Ba đà ma yết tất đà dạ.",
+      "Ta bà ha. Na ra cẩn trì bàn đà ra dạ.",
+      "Ta bà ha. Ma bà lị thắng yết ra dạ.",
+      "Ta bà ha.",
+      "Nam mô hắc ra đát na, đa ra dạ da.",
+      "Nam mô a rị da, bà lô yết đế,",
+      "thước bàn ra dạ. Ta bà ha.",
+      "Án, tất điện đô, mạn đa ra, bạt đà dạ. Ta bà ha.",
+    ],
   },
 ];
