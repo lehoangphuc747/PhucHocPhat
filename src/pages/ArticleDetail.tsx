@@ -89,9 +89,7 @@ const ArticleDetail = () => {
             <Table className="w-full table-fixed">
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-1/3 text-left text-gray-700 dark:text-gray-300"></TableHead>
-                  <TableHead className="w-1/3 text-left text-gray-700 dark:text-gray-300"></TableHead>
-                  <TableHead className="w-1/3 text-left text-gray-700 dark:text-gray-300"></TableHead>
+                  {/* Đã loại bỏ các TableHead trống */}
                 </TableRow>
               </TableHeader>
               <TableBody>
