@@ -20,4 +20,9 @@ export const articles: Article[] = [
     title: "Vô Ngã Nhạc Kinh (Bài Hát Về Vô Ngã)",
     videoUrl: "https://www.youtube.com/embed/T9ZESzU0h8s",
   },
+  {
+    id: "nghi-thuc-tri-tung-chu-dai-bi-tai-gia",
+    title: "NGHI THỨC TRÌ TỤNG CHÚ ĐẠI BI TẠI GIA",
+    videoUrl: "https://www.youtube.com/embed/zNYT7HBneHY", // Sử dụng liên kết ví dụ bạn cung cấp
+  },
 ];
