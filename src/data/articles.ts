@@ -1,7 +1,7 @@
 export interface Article {
   id: string;
   title: string;
-  videoUrl: string;
+  videoUrl?: string; // Đã thay đổi thành optional
   content?: string; // Thêm trường content
 }
 
@@ -24,7 +24,7 @@ export const articles: Article[] = [
   {
     id: "nghi-thuc-tri-tung-chu-dai-bi-tai-gia",
     title: "NGHI THỨC TRÌ TỤNG CHÚ ĐẠI BI TẠI GIA",
-    videoUrl: "https://www.youtube.com/embed/zNYT7HBneHY", // Sử dụng liên kết ví dụ bạn cung cấp
+    // videoUrl: "https://www.youtube.com/embed/zNYT7HBneHY", // Đã xóa trường videoUrl
     content: `
       <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Video tham khảo: Chú Đại Bi - YouTube</p>
       <p class="italic text-gray-700 dark:text-gray-300 mb-6">(Trước khi bắt đầu, hãy giữ thân tâm thanh tịnh, trang phục trang nghiêm, ngồi thẳng lưng và hai tay chắp trước ngực.)</p>

@@ -40,18 +40,20 @@ const ArticleDetail = () => {
       <h1 className="text-4xl font-bold mb-6 text-center text-gray-800 dark:text-gray-200">
         {article.title}
       </h1>
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden mb-8">
-        <AspectRatio ratio={16 / 9}>
-          <iframe
-            className="w-full h-full"
-            src={article.videoUrl}
-            title={article.title}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-          ></iframe>
-        </AspectRatio>
-      </div>
+      {article.videoUrl && ( // Chỉ hiển thị phần video nếu có videoUrl
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden mb-8">
+          <AspectRatio ratio={16 / 9}>
+            <iframe
+              className="w-full h-full"
+              src={article.videoUrl}
+              title={article.title}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
+          </AspectRatio>
+        </div>
+      )}
 
       {article.content && (
         <div
