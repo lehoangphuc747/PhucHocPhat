@@ -40,7 +40,7 @@ const ArticleDetail = () => {
       <h1 className="text-4xl font-bold mb-6 text-center text-gray-800 dark:text-gray-200">
         {article.title}
       </h1>
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden mb-8">
         <AspectRatio ratio={16 / 9}>
           <iframe
             className="w-full h-full"
@@ -52,6 +52,13 @@ const ArticleDetail = () => {
           ></iframe>
         </AspectRatio>
       </div>
+
+      {article.content && (
+        <div
+          className="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300"
+          dangerouslySetInnerHTML={{ __html: article.content }}
+        />
+      )}
     </div>
   );
 };
