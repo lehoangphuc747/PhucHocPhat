@@ -3,6 +3,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Link } from "react-router-dom";
+import { articles } from "@/data/articles";
 
 const Library = () => {
   return (
@@ -11,16 +13,15 @@ const Library = () => {
         Thư viện
       </h1>
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        <Card>
-          <CardHeader>
-            <CardTitle>Bài hát về sự buông bỏ</CardTitle>
-          </CardHeader>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Con đường trở thành Phật tử</CardTitle>
-          </CardHeader>
-        </Card>
+        {articles.map((article) => (
+          <Link to={`/library/${article.id}`} key={article.id}>
+            <Card className="hover:shadow-lg transition-shadow duration-200 cursor-pointer">
+              <CardHeader>
+                <CardTitle>{article.title}</CardTitle>
+              </CardHeader>
+            </Card>
+          </Link>
+        ))}
       </div>
     </div>
   );
