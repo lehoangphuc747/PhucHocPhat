@@ -26,7 +26,6 @@ export const articles: Article[] = [
     title: "NGHI THỨC TRÌ TỤNG CHÚ ĐẠI BI TẠI GIA",
     // videoUrl: "https://www.youtube.com/embed/zNYT7HBneHY", // Đã xóa trường videoUrl
     content: `
-      <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Video tham khảo: Chú Đại Bi - YouTube</p>
       <p class="italic text-gray-700 dark:text-gray-300 mb-6">(Trước khi bắt đầu, hãy giữ thân tâm thanh tịnh, trang phục trang nghiêm, ngồi thẳng lưng và hai tay chắp trước ngực.)</p>
 
       <h2 class="text-2xl font-bold mt-8 mb-4 text-gray-800 dark:text-gray-200">PHẦN 1: KHAI KINH (TRƯỚC KHI TỤNG)</h2>
