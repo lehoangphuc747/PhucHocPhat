@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button"; // Import Button component
+import React from "react";
 
 const Index = () => {
   return (
@@ -14,11 +13,10 @@ const Index = () => {
           <p>Sống một đời không oán hận, không ganh đua, không hơn thua</p>
           <p>Đó là cách sống của một người có đạo."</p>
         </blockquote>
-        <Button asChild size="lg"> {/* Thêm nút Khám phá */}
-          <Link to="/library">
-            Khám phá Thư viện
-          </Link>
-        </Button>
+        {/* Tạm thời loại bỏ Button và Link để cô lập lỗi */}
+        <button className="px-6 py-3 bg-blue-600 text-white rounded-md text-lg font-medium hover:bg-blue-700 transition-colors">
+          Khám phá Thư viện
+        </button>
       </div>
     </div>
   );
