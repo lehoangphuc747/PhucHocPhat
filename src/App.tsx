@@ -13,10 +13,10 @@ import React from "react";
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <React.Fragment> {/* Bọc tất cả các component con trong một Fragment */}
-      <Toaster />
-      <SonnerToaster />
+  <React.Fragment> {/* Fragment cấp cao nhất cho component App */}
+    <Toaster /> {/* Toaster và SonnerToaster được đặt ở đây */}
+    <SonnerToaster />
+    <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <BrowserRouter>
           <Routes>
@@ -30,8 +30,8 @@ const App = () => (
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
-    </React.Fragment>
-  </QueryClientProvider>
+    </QueryClientProvider>
+  </React.Fragment>
 );
 
 export default App;
