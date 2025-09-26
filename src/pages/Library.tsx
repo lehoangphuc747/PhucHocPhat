@@ -1,10 +1,8 @@
 import {
   Card,
-  CardContent,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 const Library = () => {
   return (
@@ -17,35 +15,11 @@ const Library = () => {
           <CardHeader>
             <CardTitle>Bài hát về sự buông bỏ</CardTitle>
           </CardHeader>
-          <CardContent>
-            <AspectRatio ratio={16 / 9}>
-              <iframe
-                className="w-full h-full rounded-lg"
-                src="https://www.youtube.com/embed/zNYT7HBneHY"
-                title="Bài hát về sự buông bỏ"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              ></iframe>
-            </AspectRatio>
-          </CardContent>
         </Card>
         <Card>
           <CardHeader>
             <CardTitle>Con đường trở thành Phật tử</CardTitle>
           </CardHeader>
-          <CardContent>
-            <AspectRatio ratio={16 / 9}>
-              <iframe
-                className="w-full h-full rounded-lg"
-                src="https://www.youtube.com/embed/-3xn4oe9Arc"
-                title="Con đường trở thành Phật tử"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              ></iframe>
-            </AspectRatio>
-          </CardContent>
         </Card>
       </div>
     </div>
