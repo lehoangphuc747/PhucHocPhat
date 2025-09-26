@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { GripVertical } from "lucide-react";
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "react-resizable-panels";
 

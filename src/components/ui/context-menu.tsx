@@ -16,6 +16,8 @@ const ContextMenuSub = ContextMenuPrimitive.Sub;
 
 const ContextMenuRadioGroup = ContextMenuPrimitive.RadioGroup;
 
+const ContextMenuGroup = ContextMenuPrimitive.Group; // Đã thêm import ContextMenuGroup
+
 const ContextMenuSubTrigger = React.forwardRef<
   React.ElementRef<typeof ContextMenuPrimitive.SubTrigger>,
   React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.SubTrigger> & {

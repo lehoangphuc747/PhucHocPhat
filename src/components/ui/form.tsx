@@ -4,12 +4,12 @@ import * as React from "react";
 import * as LabelPrimitive from "@radix-ui/react-label";
 import { Slot } from "@radix-ui/react-slot";
 import {
-  Controller, // Đã thêm lại Controller
-  ControllerProps, // Đã thêm lại ControllerProps
-  FieldPath, // Đã thêm lại FieldPath
-  FieldValues, // Đã thêm lại FieldValues
-  FormProvider, // Đã thêm lại FormProvider
-  useFormContext, // Đã thêm lại useFormContext
+  Controller,
+  ControllerProps,
+  FieldPath,
+  FieldValues,
+  FormProvider,
+  useFormContext,
 } from "react-hook-form";
 
 import { cn } from "@/lib/utils";
@@ -39,8 +39,32 @@ const FormItem = React.forwardRef<
 });
 FormItem.displayName = "FormItem";
 
+type FormFieldContextValue<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+> = {
+  name: TName;
+};
+
+const FormFieldContext = React.createContext<FormFieldContextValue>(
+  {} as FormFieldContextValue,
+);
+
+const FormField = <
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+>(
+  props: ControllerProps<TFieldValues, TName>,
+) => {
+  return (
+    <FormFieldContext.Provider value={{ name: props.name }}>
+      <Controller {...props} />
+    </FormFieldContext.Provider>
+  );
+};
+
 const useFormField = () => {
-  const fieldContext = React.useContext(FormField);
+  const fieldContext = React.useContext(FormFieldContext); // Đã sửa thành FormFieldContext
   const itemContext = React.useContext(FormItemContext);
   const { getFieldState, formState } = useFormContext();
 
@@ -84,7 +108,7 @@ type FormControlProps = React.ComponentPropsWithoutRef<typeof Slot>;
 
 const FormControl = React.forwardRef<HTMLElement, FormControlProps>(
   ({ ...props }, ref) => {
-    const { formItemId, formDescriptionId, formMessageId } =
+    const { formItemId, formDescriptionId, formMessageId, error } = // Đã thêm error
       useFormField();
 
     return (

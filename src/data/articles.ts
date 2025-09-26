@@ -15,4 +15,9 @@ export const articles: Article[] = [
     title: "Con đường trở thành Phật tử",
     videoUrl: "https://www.youtube.com/embed/-3xn4oe9Arc",
   },
+  {
+    id: "vo-nga-nhac-kinh",
+    title: "Vô Ngã Nhạc Kinh (Bài Hát Về Vô Ngã)",
+    videoUrl: "https://www.youtube.com/embed/T9ZESzU0h8s",
+  },
 ];

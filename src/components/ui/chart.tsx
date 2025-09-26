@@ -18,7 +18,7 @@ const ChartContext = React.createContext<
 type ChartConfig = {
   [k: string]: {
     label?: string;
-    icon?: React.ComponentType;
+    icon?: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
   } & (
     | {
         color?: string;
@@ -134,11 +134,12 @@ type ChartTooltipProps = React.ComponentProps<typeof RechartsPrimitive.Tooltip> 
     formatter?: (
       value: number,
       name: string,
-      props: RechartsPrimitive.TooltipPayload,
+      props: any,
     ) => React.ReactNode;
     color?: string;
     nameKey?: string;
     labelKey?: string;
+    indicator?: "dot" | "line";
   };
 
 const ChartTooltip = React.forwardRef<
@@ -171,17 +172,17 @@ const ChartTooltip = React.forwardRef<
       }
 
       const item = payload?.[0];
-      const name = item?.name;
+      const name = (item as any)?.name; // Ép kiểu sang any để truy cập name
 
       if (labelKey) {
-        return item?.payload?.[labelKey];
+        return (item as any)?.payload?.[labelKey];
       }
 
       if (labelFormatter) {
         return labelFormatter(label, payload);
       }
 
-      if (config[name as keyof typeof config]?.label) {
+      if (name && config[name as keyof typeof config]?.label) {
         return config[name as keyof typeof config]?.label;
       }
 
@@ -192,7 +193,7 @@ const ChartTooltip = React.forwardRef<
       return null;
     }
 
-    const nestLabel = payload?.[0]?.name && tooltipLabel ? true : false;
+    const nestLabel = (payload?.[0] as any)?.name && tooltipLabel ? true : false;
 
     return (
       <div
@@ -206,13 +207,16 @@ const ChartTooltip = React.forwardRef<
         {!nestLabel ? tooltipLabel : null}
         <div className="grid gap-1.5">
           {payload.map((item, index) => {
-            const key = `${item.dataKey}-${index}`;
-            const itemConfig = item.dataKey
-              ? config[item.dataKey as keyof typeof config]
-              : undefined;
-            const itemColor = itemConfig?.color || item.fill || item.stroke;
+            const typedItem: any = item; // Ép kiểu sang any để truy cập thuộc tính
+            const key = (typedItem.dataKey || typedItem.name || '') as string;
+            if (!key) {
+              return null;
+            }
 
-            if (item.hide) {
+            const itemConfig = config[key as keyof typeof config];
+            const itemColor = itemConfig?.color || typedItem.color || typedItem.fill || typedItem.stroke || typedItem.payload?.fill || typedItem.payload?.stroke;
+
+            if (typedItem.hide) {
               return null;
             }
 
@@ -249,14 +253,14 @@ const ChartTooltip = React.forwardRef<
                   <div className="grid gap-1.5">
                     {nestLabel ? tooltipLabel : null}
                     <span className="text-muted-foreground">
-                      {itemConfig?.label || item.nameKey || item.name}
+                      {itemConfig?.label || typedItem.name}
                     </span>
                   </div>
-                  {item.value && (
+                  {typedItem.value && (
                     <span className="font-mono font-medium tabular-nums text-foreground">
                       {formatter
-                        ? formatter(item.value as number, item.name as string, item)
-                        : item.value.toLocaleString()}
+                        ? formatter(typedItem.value as number, typedItem.name as string, typedItem)
+                        : typedItem.value.toLocaleString()}
                     </span>
                   )}
                 </div>
@@ -301,13 +305,14 @@ const ChartLegend = React.forwardRef<
         {...props}
       >
         {payload.map((item) => {
-          const key = item?.dataKey || item?.payload?.dataKey || item?.name;
+          const typedItem: any = item; // Ép kiểu sang any để truy cập thuộc tính
+          const key = (typedItem.dataKey || typedItem.name || '') as string;
           if (!key) {
             return null;
           }
 
           const itemConfig = config[key as keyof typeof config];
-          const color = itemConfig?.color || item.color || item.payload?.fill || item.stroke;
+          const color = itemConfig?.color || typedItem.color || typedItem.fill || typedItem.stroke || typedItem.payload?.fill || typedItem.payload?.stroke;
 
           return (
             <div
@@ -334,7 +339,7 @@ const ChartLegend = React.forwardRef<
                   />
                 )
               ) : null}
-              {itemConfig?.label || item.nameKey || item.name}
+              {itemConfig?.label || typedItem.name}
             </div>
           );
         })}

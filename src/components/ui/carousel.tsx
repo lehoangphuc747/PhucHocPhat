@@ -16,6 +16,8 @@ type CarouselContextProps = {
   scrollPrev: () => void;
   canScrollNext: boolean;
   canScrollPrev: boolean;
+  opts?: Parameters<typeof useEmblaCarousel>[0]; // Đã thêm opts
+  orientation?: "horizontal" | "vertical"; // Đã thêm orientation
 } & React.ComponentPropsWithoutRef<"div">;
 
 const CarouselContext = React.createContext<CarouselContextProps | null>(null);
