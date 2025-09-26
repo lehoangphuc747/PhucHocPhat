@@ -8,7 +8,7 @@ const Library = () => {
       <h1 className="text-3xl font-bold my-6 text-center text-gray-800 dark:text-gray-200">
         Thư viện
       </h1>
-      <div className="grid gap-2 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-2"> {/* Đã loại bỏ md:grid-cols-2 và lg:grid-cols-3 */}
         {articles.map((article) => (
           <Link
             to={`/library/${article.id}`}
