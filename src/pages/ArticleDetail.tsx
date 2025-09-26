@@ -70,13 +70,15 @@ const ArticleDetail = () => {
         </div>
       )}
 
-      {article.content && (
+      {/* Hiển thị Phần 1 */}
+      {article.part1Content && (
         <div
           className="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300"
-          dangerouslySetInnerHTML={{ __html: article.content }}
+          dangerouslySetInnerHTML={{ __html: article.part1Content }}
         />
       )}
 
+      {/* Hiển thị Phần 2 (bảng chú) */}
       {totalChantLines > 0 && (
         <div className="mt-8">
           <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200 text-center">
@@ -110,6 +112,14 @@ const ArticleDetail = () => {
             </Table>
           </div>
         </div>
+      )}
+
+      {/* Hiển thị Phần 3 */}
+      {article.part3Content && (
+        <div
+          className="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 mt-8"
+          dangerouslySetInnerHTML={{ __html: article.part3Content }}
+        />
       )}
     </div>
   );
